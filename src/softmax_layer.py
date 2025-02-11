@@ -12,5 +12,5 @@ class SoftmaxLayer(Layer):
         out = e_x / np.sum(e_x, axis=1)[:, np.newaxis]
         return out
 
-    def backward_propagation(self, partial_derivative, _):
+    def backward_propagation(self, partial_derivative):
         return partial_derivative

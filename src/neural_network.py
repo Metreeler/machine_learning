@@ -1,5 +1,6 @@
 import numpy as np
 
+from convolutionnal_layer import ConvolutionnalLayer
 
 
 def loss_function(array, y):
@@ -22,11 +23,10 @@ class NeuralNetwork:
     def __init__(self, layers):
         self.layers = layers
     
-    def train(self, epochs, learning_rate, batch_proportion, x_values, y_values):
+    def train(self, epochs, batch_proportion, x_values, y_values):
         
         batch_size = int(x_values.shape[0] * batch_proportion)
         batches = int(x_values.shape[0] / batch_size)
-        print(batch_size)
         
         for ep in range(epochs):
             print("Epoch :", ep, end=" ")
@@ -41,7 +41,15 @@ class NeuralNetwork:
                 x = self.forward(x)
                 
                 # Backward propagation
-                self.backward(x, y, learning_rate)
+                self.backward(x, y)
+            
+            convolution_layer_count = 0
+            for l in self.layers:
+                if type(l) == ConvolutionnalLayer:
+                    l.render_kernels(1, "data/kernels/" + str(convolution_layer_count) + "_" + str(ep) + ".png")
+                    convolution_layer_count += 1
+            
+            
             print("loss :", np.sum(loss_function(x, y)))
     
     def test(self, x_values, y_values):
@@ -53,9 +61,9 @@ class NeuralNetwork:
             x = layer.forward_propagation(x)
         return x
     
-    def backward(self, x, y, learning_rate):
+    def backward(self, x, y):
         y = loss_function_derivative(x, y)
         for layer in reversed(self.layers):
-            y = layer.backward_propagation(y, learning_rate)
+            y = layer.backward_propagation(y)
         
         

@@ -9,5 +9,5 @@ class Layer:
         self.input_vector = input_vector
         return np.array([])
     
-    def backward_propagation(self, partial_derivative, learning_rate):
+    def backward_propagation(self, partial_derivative):
         return np.array([])

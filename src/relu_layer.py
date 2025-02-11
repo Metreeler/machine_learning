@@ -15,7 +15,7 @@ class ReluLayer(Layer):
             np.where(input_vector > self.threshold, self.threshold, input_vector)
         return np.where(input_vector > 0, input_vector, 0)
 
-    def backward_propagation(self, partial_derivative, _):
+    def backward_propagation(self, partial_derivative):
         if self.threshold is not None:
             return np.where((self.input_vector > 0) & (self.input_vector < self.threshold), 1, 0) * partial_derivative
         return np.where(self.input_vector > 0, 1, 0) * partial_derivative

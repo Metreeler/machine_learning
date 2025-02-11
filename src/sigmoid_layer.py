@@ -12,5 +12,5 @@ class SigmoidLayer(Layer):
         self.input_vector = input_vector
         return sigmoid(self.input_vector)
 
-    def backward_propagation(self, partial_derivative, _):
+    def backward_propagation(self, partial_derivative):
         return sigmoid(self.input_vector) * (1 - sigmoid(self.input_vector)) * partial_derivative
